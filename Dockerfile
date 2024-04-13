@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y openssl
 # Install all node_modules, including dev dependencies
 FROM base as deps
 
-WORKDIR /
+WORKDIR /app
 
 ADD package.json package-lock.json ./
 RUN npm install --omit=dev
@@ -18,7 +18,7 @@ RUN npm install --omit=dev
 # Setup production node_modules
 FROM base as production-deps
 
-WORKDIR /
+WORKDIR /app
 
 COPY --from=deps //node_modules //node_modules
 ADD package.json package-lock.json ./
@@ -27,7 +27,7 @@ RUN npm prune --production
 # Build the app
 FROM base as build
 
-WORKDIR /
+WORKDIR /app
 
 COPY --from=deps //node_modules //node_modules
 
@@ -40,7 +40,7 @@ RUN npm run build
 # Finally, build the production image with minimal footprint
 FROM base
 
-WORKDIR /
+WORKDIR /app
 
 COPY --from=production-deps //node_modules //node_modules
 COPY --from=build //node_modules/.prisma //node_modules/.prisma
