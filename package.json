@@ -1,5 +1,5 @@
 {
-  "name": "azure-remix-stack-template",
+  "name": "",
   "private": true,
   "description": "",
   "license": "",
@@ -32,10 +32,10 @@
   ],
   "dependencies": {
     "@prisma/client": "^4.5.0",
-    "@remix-run/node": "*",
-    "@remix-run/react": "*",
-    "@remix-run/serve": "*",
-    "@remix-run/server-runtime": "*",
+    "@remix-run/node": "^2.8.1",
+    "@remix-run/react": "^2.8.1",
+    "@remix-run/serve": "^2.8.1",
+    "@remix-run/server-runtime": "^2.8.1",
     "bcryptjs": "^2.4.3",
     "isbot": "^3.6.3",
     "react": "^18.2.0",
@@ -44,8 +44,8 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@remix-run/dev": "*",
-    "@remix-run/eslint-config": "*",
+    "@remix-run/dev": "^2.8.1",
+    "@remix-run/eslint-config": "^2.8.1",
     "@testing-library/cypress": "^8.0.3",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",

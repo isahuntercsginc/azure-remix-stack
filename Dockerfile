@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y openssl
 # Install all node_modules, including dev dependencies
 FROM base as deps
 
-WORKDIR /myapp
+WORKDIR /
 
 ADD package.json package-lock.json ./
 RUN npm install --production=false
@@ -18,18 +18,18 @@ RUN npm install --production=false
 # Setup production node_modules
 FROM base as production-deps
 
-WORKDIR /myapp
+WORKDIR /
 
-COPY --from=deps /myapp/node_modules /myapp/node_modules
+COPY --from=deps //node_modules //node_modules
 ADD package.json package-lock.json ./
 RUN npm prune --production
 
 # Build the app
 FROM base as build
 
-WORKDIR /myapp
+WORKDIR /
 
-COPY --from=deps /myapp/node_modules /myapp/node_modules
+COPY --from=deps //node_modules //node_modules
 
 ADD prisma .
 RUN npx prisma generate
@@ -40,13 +40,13 @@ RUN npm run build
 # Finally, build the production image with minimal footprint
 FROM base
 
-WORKDIR /myapp
+WORKDIR /
 
-COPY --from=production-deps /myapp/node_modules /myapp/node_modules
-COPY --from=build /myapp/node_modules/.prisma /myapp/node_modules/.prisma
+COPY --from=production-deps //node_modules //node_modules
+COPY --from=build //node_modules/.prisma //node_modules/.prisma
 
-COPY --from=build /myapp/build /myapp/build
-COPY --from=build /myapp/public /myapp/public
+COPY --from=build //build //build
+COPY --from=build //public //public
 ADD . .
 
 CMD ["npm", "start"]
